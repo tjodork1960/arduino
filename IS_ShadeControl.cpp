@@ -142,15 +142,15 @@ namespace st
 				//if hit time limit and no switch assume that it worked else set to unknown
 				if (m_eCurrentState == opening) {
 					if (m_nPinOpenedSW ==0)  {
-						m_eCurrentState = unknown;
+						m_eCurrentState = open;
 		                        } else {
-     				         	m_eCurrentState = open;
+     				         	m_eCurrentState = unknown;
 			        	}	
                                 } else if (m_eCurrentState == closing) {
 					if (m_nPinClosedSW ==0)  {
-						m_eCurrentState = unknown;
+						m_eCurrentState = closed;
 				        } else {
-     					        m_eCurrentState = closed;
+     					        m_eCurrentState = unknown;
 					}	
 				}
 				
