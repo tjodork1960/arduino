@@ -31,44 +31,44 @@ namespace st
 	void IS_ShadeControl::controlMotor(command c) 
 	{ 
 	   if ((c == Stop) && (( m_eCurrentState == opening) || (m_eCurrentState == closing))) {
-		     digitalWrite(m_npinMotorOutputOpen,  m_bInvertLogic ? LOW: HIGH);
-			 digitalWrite(m_npinMotorOutputClose,  m_bInvertLogic ? LOW: HIGH);
-             analogWrite(m_npinMotorOutputEnablePWM, 0);
-			 m_eCurrentState = unknown;
+		    	digitalWrite(m_npinMotorOutputOpen,  m_bInvertLogic ? LOW: HIGH);
+			digitalWrite(m_npinMotorOutputClose,  m_bInvertLogic ? LOW: HIGH);
+             		analogWrite(m_npinMotorOutputEnablePWM, 0);
+			m_eCurrentState = unknown;
 
  			//cancel timer
 			CancelTimer();
 			 
 	   } else if (c == Open) {
-		     digitalWrite(m_npinMotorOutputOpen,  m_bInvertLogic ? HIGH : LOW);
-			 digitalWrite(m_npinMotorOutputClose,  m_bInvertLogic ? LOW : HIGH);
-             analogWrite(m_npinMotorOutputEnablePWM, m_lMotorPWMSpeed); 	
+		        digitalWrite(m_npinMotorOutputOpen,  m_bInvertLogic ? HIGH : LOW);
+		        digitalWrite(m_npinMotorOutputClose,  m_bInvertLogic ? LOW : HIGH);
+                        analogWrite(m_npinMotorOutputEnablePWM, m_lMotorPWMSpeed); 	
 
-     		 //Save time operation limit
-             m_lTimeOperationDone = millis() + 	m_lOpenTimeLimit;		 
+     		       //Save time operation limit
+                       m_lTimeOperationDone = millis() + 	m_lOpenTimeLimit;		 
 
-     		 //Increment number of active timers
-     		 st::Everything::bTimersPending++;
-			 m_bTimerPending = true;
+     		      //Increment number of active timers
+     		      st::Everything::bTimersPending++;
+		      m_bTimerPending = true;
 			
-			 m_bCurrentState = OPENING;	
+		      m_bCurrentState = OPENING;	
 
 	   } else if (c == Close) {
-		     digitalWrite(m_npinMotorOutputOpen,  m_bInvertLogic ? LOW : HIGH);
-			 digitalWrite(m_npinMotorOutputClose,  m_bInvertLogic ? HIGH : LOW);
-             analogWrite(m_npinMotorOutputEnablePWM, m_lMotorPWMSpeed); 	
+		      digitalWrite(m_npinMotorOutputOpen,  m_bInvertLogic ? LOW : HIGH);
+		      digitalWrite(m_npinMotorOutputClose,  m_bInvertLogic ? HIGH : LOW);
+                      analogWrite(m_npinMotorOutputEnablePWM, m_lMotorPWMSpeed); 	
 
-			//Save time operation limit
-			m_lTimeOperationDone = millis() + 	m_lClosedTimeLimit;	
+		      //Save time operation limit
+		      m_lTimeOperationDone = millis() + 	m_lClosedTimeLimit;	
 
-    		//Increment number of active timers
-     		st::Everything::bTimersPending++;
-			m_bTimerPending = true;		
+    		      //Increment number of active timers
+     		      st::Everything::bTimersPending++;
+		      m_bTimerPending = true;		
 
-			m_bCurrentState = CLOSING;		
+		      m_bCurrentState = CLOSING;		
 
-       }
-	}
+          }
+    }
 
 //public
 	//constructor
@@ -86,7 +86,7 @@ namespace st
 		m_bInternalPullup(internalPullup),
 		m_npinMotorOutputOpen(pinOutputOpen),
 		m_npinMotorOutputClose(pinOutputClose),
-        m_npinMotorOutputEnablePWM(pinMotorEnablePWM),
+                m_npinMotorOutputEnablePWM(pinMotorEnablePWM),
 		m_lMotorPWMSpeed(PWMSpeedValue),
 		m_eDesiredStartingState(desiredStartingState),
 		m_bInvertLogic(invertOutputLogic),
@@ -143,14 +143,14 @@ namespace st
 				if (m_eCurrentState == opening) {
 					if (m_nPinOpenedSW ==0)  {
 						m_eCurrentState = open;
-				    } else {
-     					m_eCurrentState = unknown;
-					}	
-                } else if (m_eCurrentState == closing) {
+		                        } else {
+     				         	m_eCurrentState = unknown;
+			        	}	
+                                } else if (m_eCurrentState == closing) {
 					if (m_nPinClosedSW ==0)  {
 						m_eCurrentState = closed;
-				    } else {
-     					m_eCurrentState = unknown;
+				        } else {
+     					        m_eCurrentState = unknown;
 					}	
 				}
 				
@@ -177,17 +177,17 @@ namespace st
 		{
 			if ((m_eCurrentState == closed) && (!m_bTimerPending)) {
 				
-     			controlMotor(open);		
+     			    controlMotor(open);		
    
-	    		//Queue the door status update the ST Cloud 
-		    	Everything::sendSmartStringNow(getName() +  F(" opening") );					
+	    		    //Queue the door status update the ST Cloud 
+		    	    Everything::sendSmartStringNow(getName() +  F(" opening") );					
 			}
 			
 		}  else if (s == F("close")) {
 			
 			if ((m_eCurrentState == open) && (!m_bTimerPending)) {
 				
-     			controlMotor(close);	
+     			   controlMotor(close);	
 
 			   //Queue the door status update the ST Cloud 
 			   Everything::sendSmartStringNow(getName() +  F(" closing") );				
@@ -204,7 +204,7 @@ namespace st
 		Everything::sendSmartString(getName() + (getStatus() ? F(" closed") : F(" open")));   //how does getStatus work ????
 	}
 
-    void IS_ShadeControl::CancelTimer()
+        void IS_ShadeControl::CancelTimer()
 	{
 		if (st::Everything::bTimersPending > 0) st::Everything::bTimersPending--;
 		m_bTimerPending = false;
